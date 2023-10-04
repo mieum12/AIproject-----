@@ -1,0 +1,41 @@
+import * as tf from '@tensorflow/tfjs';
+import { loadLayersModel } from '@tensorflow/tfjs-node';
+
+async function loadModel(): Promise<tf.LayersModel> {
+  const modelPath = 'path/to/emotion_model';
+
+  try {
+    const model = await loadLayersModel(`file://${modelPath}`);
+    return model;
+  } catch (error) {
+    console.error('Failed to load the model:', error);
+    throw error;
+  }
+}
+
+async function classifyText(text: string, categories: string[]): Promise<string> {
+  const model = await loadModel();
+
+  // 모델을 사용하여 감정 분류
+  const predictions = model.predict(tf.tensor2d([text], [1, 1])) as tf.Tensor;
+  const predictionsArray = await predictions.array() as number[];
+
+  // 가장 높은 확률을 가진 카테고리 찾기
+  const maxProbability = Math.max(...predictionsArray);
+  const maxIndex = predictionsArray.indexOf(maxProbability);
+  const maxCategory = categories[maxIndex];
+
+  return maxCategory;
+}
+
+// 텍스트 감정 분류 예시
+const text = 'I feel happy today!';
+const categories = ['sadness', 'anger', 'love', 'surprise', 'fear', 'happy'];
+
+classifyText(text, categories)
+  .then((category) => {
+    console.log('Predicted category:', category);
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+  });
