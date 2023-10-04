@@ -5,6 +5,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   res.json({
     nickname: 'TEST지원',
     profileImg: '/test.jpeg',
+    platform: 'NAVER',
   });
   //2. 로그인 안됐다고 가정
   // res.json(undefined);

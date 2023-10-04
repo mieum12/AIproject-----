@@ -19,6 +19,7 @@ import Comments from '@components/my-page/myComments';
 import Bookmark from '@components/my-page/myBookmark';
 import { useUpdateProfile, useUserProfile } from '@hooks/useUserProfile';
 import { useUser } from '@hooks/useUser';
+import { UserDto } from '@dto/userDto';
 
 // help me! 코치님, renderSocial 함수를 설정하였지만 소셜 로그인의 이미지를 받아오지 못하는것 같아요 ㅠㅠ) 도와주세욥
 // 코치님, 내가 작성한 게시판을 조회하여 클릭하게 되면 게시판의 상세페이지로 넘어가게 하려고 합니다. 마이페이지의 게시판에서 어떻게 연결해야 할까요? 감이 안옵니다 ㅠㅠ)
@@ -34,19 +35,20 @@ export default function MyPage() {
   // 사용자 정보가 로드되면 해당 정보를 사용하여 상태를 설정
   // TODO 프로필 ㄹ이미지가 안 따라와...
   const { user } = useUser();
-  const [nickname, setNickname] = useState(user?.nickname ?? '길동씨');
+  console.log('마이페이지', user);
+  const [nickname, setNickname] = useState(user?.nickname);
   const [profileImg, setProfileImg] = useState(user?.profileImg ?? '/profile-img.png');
-  const [social, setSocial] = useState(user?.social ?? '');
+  const [platform, setPlatform] = useState(user?.platform ?? '');
 
   // 프로필 업데이트
   const updateProfileMutation = useUpdateProfile();
 
   // 소셜 로그인 이미지를 렌더링하는 함수
-  const renderSocial = (social: string) => {
-    if (!social) return null;
-    if (social === 'KAKAO') {
+  const renderPlatform = (platform: string) => {
+    if (!platform) return null;
+    if (platform === 'KAKAO') {
       return <img src="/kakao-icon.png" alt="Kakao" width="60" height="30" />;
-    } else if (social === 'NAVER') {
+    } else if (platform === 'NAVER') {
       return <img src="/naver-icon.png" alt="Naver" width="60" height="30" />;
     } else {
       return null;
@@ -127,7 +129,7 @@ export default function MyPage() {
     <div className="body-box">
       <UserInfoContainer>
         <input type="file" ref={imageRef} accept="image/*" style={{ display: 'none' }} onChange={handleAvatarChange} />
-        <Avatar src={profileImg as string} onClick={handleAvatarClick} />
+        <Avatar src={user?.profileImg as string} onClick={handleAvatarClick} />
         <UserInfoText style={{ display: 'flex', alignItems: 'center' }}>
           {isEditing ? (
             // 수정 중일 때 input 요소
@@ -140,7 +142,7 @@ export default function MyPage() {
             />
           ) : (
             // 수정 중이 아닐 때 h2 요소
-            <div>{nickname}</div>
+            <div>{user?.nickname}</div>
           )}
           {/* 수정 버튼 */}
           {isEditing ? (
@@ -154,7 +156,7 @@ export default function MyPage() {
           )}
         </UserInfoText>
         {/* 로그인 이미지 */}
-        <div>{renderSocial(social)}</div>
+        <div>{renderPlatform(user?.platform)}</div>
       </UserInfoContainer>
       <Tabs value={value} onChange={handleChange}>
         <StyledTabsList>

@@ -35,7 +35,9 @@ export const Navigation = () => {
       alert('로그아웃 실패!!!!');
     }
   };
+  // TODO : ✅ nav에서 user 정보 가져오기 (임시로)
   const { user } = useUser();
+  console.log('네브에서 user', user);
 
   if (!user) {
     return (
