@@ -1,7 +1,7 @@
-import Image from 'next/image';
-import { Mainbox, BoxStyled } from '../../styles/MainBox.styled';
+import Image from "next/image";
+import { Mainbox, BoxStyled } from "@styles/MainBox.styled";
 
-export default function MainBox({ height }: { height: number }) {
+export default function MainBox() {
   return (
     <Mainbox>
       <BoxStyled height={700}>
@@ -21,7 +21,7 @@ export default function MainBox({ height }: { height: number }) {
       <BoxStyled height={700}>
         <Image src="/main3.png" width={400} height={400} alt="Main Picture" />
         <div className="box3-text">
-          <div> 마음 처방전의 AI가 나의 마음을 분석해서 알맞은 "컨텐츠 서비스"를 처방해 드려요 </div>
+          <div>마음 처방전의 AI가 나의 마음을 분석해서 알맞은 "컨텐츠 서비스"를 처방해 드려요</div>
           {/* <div>작은 글씨로 부연 설명~~~~</div> */}
         </div>
       </BoxStyled>
