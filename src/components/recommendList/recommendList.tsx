@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+"use client";
+import React, { useState } from "react";
 import {
   Table,
   TableBody,
@@ -10,17 +11,17 @@ import {
   RadioGroup,
   FormControlLabel,
   Radio,
-} from '@mui/material';
-import { usePosts } from '@hooks/usePost';
-import Link from 'next/link';
-import { BOARD_TYPE } from '@common/constants';
+} from "@mui/material";
+import { usePosts } from "@hooks/usePost";
+import Link from "next/link";
+import { BOARD_TYPE } from "@common/constants";
 
 export default function RecommendList() {
-  const [emotion, setEmotion] = useState('HAPPINESS');
+  const [emotion, setEmotion] = useState("HAPPINESS");
 
   const { data: posts } = usePosts(BOARD_TYPE.RECOMMEND, emotion);
 
-  console.log('해당 posts들이 들어오고있어요', posts); //들어옴
+  console.log("해당 posts들이 들어오고있어요", posts); //들어옴
 
   //감정 카테고리가 바뀔 때마다
   const handleEmotionChange = (e: any) => {
@@ -28,11 +29,11 @@ export default function RecommendList() {
     setEmotion(value);
     return emotion;
   };
-  console.log('버튼 클릭:', emotion);
+  console.log("버튼 클릭:", emotion);
 
   return (
     <>
-      <div style={{ marginTop: '2%' }}>
+      <div style={{ marginTop: "2%" }}>
         <FormControl>
           <RadioGroup
             row
@@ -48,32 +49,32 @@ export default function RecommendList() {
             <FormControlLabel name="emotion" value="SURPRISE" control={<Radio />} label="SURPRISE" />
           </RadioGroup>
         </FormControl>
-        <TableContainer sx={{ width: '100%', margin: 'auto' }}>
+        <TableContainer sx={{ width: "100%", margin: "auto" }}>
           <Table stickyHeader>
             <TableHead>
               <TableRow>
-                <TableCell style={{ fontWeight: 'bold', textAlign: 'center' }}>No</TableCell>
-                <TableCell style={{ fontWeight: 'bold', textAlign: 'center' }}>감정</TableCell>
-                <TableCell style={{ fontWeight: 'bold', textAlign: 'center' }}>게시글</TableCell>
-                <TableCell style={{ fontWeight: 'bold', textAlign: 'center' }}>작성자</TableCell>
-                <TableCell style={{ fontWeight: 'bold', textAlign: 'center' }}>댓글</TableCell>
-                <TableCell style={{ fontWeight: 'bold', textAlign: 'center' }}>북마크</TableCell>
-                <TableCell style={{ fontWeight: 'bold', textAlign: 'center' }}>작성일자</TableCell>
+                <TableCell style={{ fontWeight: "bold", textAlign: "center" }}>No</TableCell>
+                <TableCell style={{ fontWeight: "bold", textAlign: "center" }}>감정</TableCell>
+                <TableCell style={{ fontWeight: "bold", textAlign: "center" }}>게시글</TableCell>
+                <TableCell style={{ fontWeight: "bold", textAlign: "center" }}>작성자</TableCell>
+                <TableCell style={{ fontWeight: "bold", textAlign: "center" }}>댓글</TableCell>
+                <TableCell style={{ fontWeight: "bold", textAlign: "center" }}>북마크</TableCell>
+                <TableCell style={{ fontWeight: "bold", textAlign: "center" }}>작성일자</TableCell>
               </TableRow>
             </TableHead>
             {posts ? (
               <TableBody>
                 {posts.map((post, index) => (
                   <TableRow key={post.id} hover>
-                    <TableCell style={{ textAlign: 'center' }}>{index + 1}</TableCell>
-                    <TableCell style={{ textAlign: 'center' }}>{post.emotion}</TableCell>
-                    <TableCell style={{ textAlign: 'center' }}>
+                    <TableCell style={{ textAlign: "center" }}>{index + 1}</TableCell>
+                    <TableCell style={{ textAlign: "center" }}>{post.emotion}</TableCell>
+                    <TableCell style={{ textAlign: "center" }}>
                       <Link href={`/recommend-board/${post.id}`}>{post.title}</Link>
                     </TableCell>
-                    <TableCell style={{ textAlign: 'center' }}>{post.author.nickname}</TableCell>
-                    <TableCell style={{ textAlign: 'center' }}>{post?.commentsCnt ?? 0}</TableCell>
-                    <TableCell style={{ textAlign: 'center' }}>{post?.bookmarksCnt ?? 0}</TableCell>
-                    <TableCell style={{ textAlign: 'center' }}>{post.createdAt}</TableCell>
+                    <TableCell style={{ textAlign: "center" }}>{post.author.nickname}</TableCell>
+                    <TableCell style={{ textAlign: "center" }}>{post?.commentsCnt ?? 0}</TableCell>
+                    <TableCell style={{ textAlign: "center" }}>{post?.bookmarksCnt ?? 0}</TableCell>
+                    <TableCell style={{ textAlign: "center" }}>{post.createdAt}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
